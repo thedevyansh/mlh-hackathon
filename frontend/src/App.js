@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
+import { Global, css } from '@emotion/react';
 import theme from './theme';
 import Layout from './components/Layout';
 import withAuthorization from './components/hoc/withAuthorization';
@@ -23,11 +24,23 @@ import '@fontsource/poppins/900.css';
 import '@fontsource/inter/400.css'
 import '@fontsource/inter/700.css'
 
+const GlobalStyles = css`
+  /*
+    This will remove the ugly border on clicking the buttons, icons, etc. (which Chakra has put in place
+    to enable accessibility). But it will still show up on keyboard focus!
+  */
+  .js-focus-visible :focus:not([data-focus-visible-added]) {
+    outline: none;
+    box-shadow: none;
+  }
+`;
+
 function App() {
   localStorage.setItem('chakra-ui-color-mode', 'dark');
 
   return (
     <ChakraProvider theme={theme}>
+      <Global styles={GlobalStyles} />
       <SocketContext.Provider value={socket}>
         <BrowserRouter>
           <Layout>
@@ -53,7 +66,7 @@ function App() {
                 component={withAuthorization(Rooms, PUBLIC_PAGE)}
               />
               <Route
-                path='/rooms/:id'
+                path='/room/:id'
                 exact
                 component={withAuthorization(Room, PUBLIC_PAGE)}
               />
