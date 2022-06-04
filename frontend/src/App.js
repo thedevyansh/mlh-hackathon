@@ -15,6 +15,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Rooms from './pages/Rooms';
+import Room from './pages/Room';
 import ErrorNotFound from './pages/ErrorNotFound';
 
 import '@fontsource/poppins/700.css';
@@ -49,7 +50,12 @@ function App() {
               <Route
                 path='/rooms'
                 exact
-                component={withAuthorization(Rooms)}
+                component={withAuthorization(Rooms, PUBLIC_PAGE)}
+              />
+              <Route
+                path='/rooms/:id'
+                exact
+                component={withAuthorization(Room, PUBLIC_PAGE)}
               />
               <Route
                 path='/'
