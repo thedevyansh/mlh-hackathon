@@ -14,6 +14,8 @@ import { SocketContext, socket } from './contexts/socket';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Rooms from './pages/Rooms';
+import Room from './pages/Room';
 import ErrorNotFound from './pages/ErrorNotFound';
 
 import '@fontsource/poppins/700.css';
@@ -44,6 +46,16 @@ function App() {
                 path='/login'
                 exact
                 component={withAuthorization(Login, NON_LOGGED_ONLY)}
+              />
+              <Route
+                path='/rooms'
+                exact
+                component={withAuthorization(Rooms, PUBLIC_PAGE)}
+              />
+              <Route
+                path='/rooms/:id'
+                exact
+                component={withAuthorization(Room, PUBLIC_PAGE)}
               />
               <Route
                 path='/'
