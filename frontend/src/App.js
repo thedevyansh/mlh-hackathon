@@ -15,6 +15,7 @@ import { SocketContext, socket } from './contexts/socket';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import SolanaMusic from './pages/SolanaMusic';
 import Rooms from './pages/Rooms';
 import Room from './pages/Room';
 import ErrorNotFound from './pages/ErrorNotFound';
@@ -59,6 +60,11 @@ function App() {
                 path='/login'
                 exact
                 component={withAuthorization(Login, NON_LOGGED_ONLY)}
+              />
+              <Route
+                path='/solana-music'
+                exact
+                component={withAuthorization(SolanaMusic, PUBLIC_PAGE)}
               />
               <Route
                 path='/rooms'
