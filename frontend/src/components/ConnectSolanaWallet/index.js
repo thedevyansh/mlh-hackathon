@@ -1,10 +1,45 @@
 import React from 'react';
-import { Container, Heading, Text, Button, Image } from '@chakra-ui/react';
+import {
+  Container,
+  Heading,
+  Text,
+  Button,
+  Image,
+  useToast,
+} from '@chakra-ui/react';
 import { HorizontalHeading } from '../../horizontalHeading';
 import { BiWallet } from 'react-icons/bi';
 import solanaLogo from './solanaLogo.png';
 
-export default function ConnectSolanaWallet() {
+export default function ConnectSolanaWallet({ setWalletAddress }) {
+  const toast = useToast();
+
+  const connectWallet = async () => {
+    try {
+      const { solana } = window;
+      if (solana) {
+        const response = await solana.connect();
+        setWalletAddress(response.publicKey.toString());
+      } else {
+        toast({
+          title: 'Phantom wallet not found.',
+          description: 'Please install the wallet from https://phantom.app.',
+          status: 'error',
+          position: 'top',
+          duration: 5000,
+        });
+      }
+    } catch (error) {
+      toast({
+        title: 'An error occured!',
+        description: error.message,
+        status: 'error',
+        position: 'top',
+        duration: 5000,
+      });
+    }
+  };
+
   return (
     <>
       <Container
@@ -33,7 +68,8 @@ export default function ConnectSolanaWallet() {
           variant='solid'
           size='lg'
           rightIcon={<BiWallet />}
-          mt='40px'>
+          mt='40px'
+          onClick={connectWallet}>
           Connect your Wallet
         </Button>
       </Container>
