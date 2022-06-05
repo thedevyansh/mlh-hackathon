@@ -41,7 +41,7 @@ socketio.attach(server, {
     origin:
       !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
         ? 'http://localhost:3000'
-        : ['https://acoustics.netlify.app'],
+        : ['https://acousticlicious.netlify.app'],
     methods: ['GET', 'POST'],
     credentials: true,
   },

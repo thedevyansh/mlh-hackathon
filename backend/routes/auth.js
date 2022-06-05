@@ -17,7 +17,7 @@ const getUserKey = username => usersPrefix + username;
 const redirect_uri =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000'
-    : 'https://acoustics.netlify.app';
+    : 'https://acousticlicious.netlify.app';
 
 router.get('/', (req, res) => {
   if (req.isAuthenticated()) {

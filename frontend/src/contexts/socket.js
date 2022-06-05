@@ -3,7 +3,7 @@ import io from 'socket.io-client';
 const SOCKET_URL =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
     ? 'http://localhost:5000'
-    : 'https://acoustics.herokuapp.com';
+    : 'https://acousticlicious.herokuapp.com';
 
 export const socket = io(SOCKET_URL, {
   withCredentials: true,
