@@ -9,11 +9,13 @@ import {
   Icon,
   Button,
   SimpleGrid,
+  useToast,
 } from '@chakra-ui/react';
 import { FaSearch } from 'react-icons/fa';
 import { Buffer } from 'buffer';
 import CreateSolanaAccount from '../CreateSolanaAccount';
 import SolanaMusicCard from '../SolanaMusicCard';
+import * as songApi from '../../services/song';
 import idl from '../../idl.json';
 import kp from '../../keypair.json';
 import { Connection, PublicKey, clusterApiUrl } from '@solana/web3.js';
@@ -23,9 +25,9 @@ window.Buffer = Buffer;
 const { SystemProgram } = web3;
 
 // Get base account keypair
-const arr = Object.values(kp._keypair.secretKey)
-const secret = new Uint8Array(arr)
-const baseAccount = web3.Keypair.fromSecretKey(secret)
+const arr = Object.values(kp._keypair.secretKey);
+const secret = new Uint8Array(arr);
+const baseAccount = web3.Keypair.fromSecretKey(secret);
 
 const programID = new PublicKey(idl.metadata.address);
 const network = clusterApiUrl('devnet');
@@ -36,6 +38,7 @@ const opts = {
 export default function ShowSolanaMusicList({ walletAddress }) {
   const [inputValue, setInputValue] = useState('');
   const [musicList, setMusicList] = useState([]);
+  const toast = useToast();
 
   const sendMusicToSolana = async () => {
     if (inputValue.length === 0) {
@@ -46,37 +49,41 @@ export default function ShowSolanaMusicList({ walletAddress }) {
     console.log('YouTube music link:', inputValue);
 
     // Call YT API to fetch title, thumbnail and channelTitle of music.
+    const response = await songApi.search(inputValue);
+    const musicDetails = response?.data?.videos[0] ?? {};
 
-    // Call Solana function to add music details to blockchain along with
-    // fetching the update music list
+    if (Object.keys(musicDetails).length !== 0) {
+      const { thumbnails, title, channelTitle } = musicDetails;
 
-    // Dummy Data
-    const musicDetails = {
-      thumbnail: 'https://i.ytimg.com/vi/2Vv-BfVoq4g/default.jpg',
-      title: 'Ed Sheeran - Perfect (Official Music Video)',
-      channelTitle: 'Ed Sheeran',
-    };
+      try {
+        const provider = getProvider();
+        const program = new Program(idl, programID, provider);
 
-    try {
-      const provider = getProvider();
-      const program = new Program(idl, programID, provider);
+        await program.rpc.addMusic(
+          thumbnails.default.url,
+          title,
+          channelTitle,
+          {
+            accounts: {
+              baseAccount: baseAccount.publicKey,
+              user: provider.wallet.publicKey,
+            },
+          }
+        );
+        console.log('Music successfully sent to Solana Program', inputValue);
 
-      await program.rpc.addMusic(
-        musicDetails.thumbnail,
-        musicDetails.title,
-        musicDetails.channelTitle,
-        {
-          accounts: {
-            baseAccount: baseAccount.publicKey,
-            user: provider.wallet.publicKey,
-          },
-        }
-      );
-      console.log('Music successfully sent to Solana Program', inputValue);
-
-      await getMusicListFromSolana();
-    } catch (error) {
-      console.log('Error sending music to Solana:', error);
+        await getMusicListFromSolana();
+      } catch (error) {
+        console.log('Error sending music to Solana:', error);
+      }
+    } else {
+      toast({
+        title: 'Invalid query',
+        description: 'Cannot find music to upload.',
+        status: 'error',
+        position: 'top',
+        duration: 5000,
+      });
     }
   };
 
