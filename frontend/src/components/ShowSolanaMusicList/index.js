@@ -16,6 +16,7 @@ import { FaSearch } from 'react-icons/fa';
 import { Buffer } from 'buffer';
 import CreateSolanaAccount from '../CreateSolanaAccount';
 import SolanaMusicCard from '../SolanaMusicCard';
+import LoadingView from '../LoadingView';
 import * as songApi from '../../services/song';
 import idl from '../../idl.json';
 import kp from '../../keypair.json';
@@ -39,9 +40,9 @@ const opts = {
 export default function ShowSolanaMusicList({ walletAddress }) {
   const [inputValue, setInputValue] = useState('');
   const [musicList, setMusicList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const authenticated = useSelector(state => state.user.authenticated);
   const toast = useToast();
-
 
   const sendMusicToSolana = async () => {
     if (inputValue.length === 0) {
@@ -56,13 +57,14 @@ export default function ShowSolanaMusicList({ walletAddress }) {
     const musicDetails = response?.data?.videos[0] ?? {};
 
     if (Object.keys(musicDetails).length !== 0) {
-      const { thumbnails, title, channelTitle } = musicDetails;
+      const { videoId, thumbnails, title, channelTitle } = musicDetails;
 
       try {
         const provider = getProvider();
         const program = new Program(idl, programID, provider);
 
         await program.rpc.addMusic(
+          videoId,
           thumbnails.default.url,
           title,
           channelTitle,
@@ -108,17 +110,19 @@ export default function ShowSolanaMusicList({ walletAddress }) {
 
   const getMusicListFromSolana = useCallback(async () => {
     try {
+      setIsLoading(true);
       const provider = getProvider();
       const program = new Program(idl, programID, provider);
       const account = await program.account.baseAccount.fetch(
         baseAccount.publicKey
       );
 
-      console.log('Got the account', account);
       setMusicList(account.musicList);
+      setIsLoading(false);
     } catch (error) {
       console.log('Error in [ getMusicListFromSolana ]: ', error);
       setMusicList(null);
+      setIsLoading(false);
     }
   }, []);
 
@@ -154,6 +158,8 @@ export default function ShowSolanaMusicList({ walletAddress }) {
 
   if (musicList === null) {
     return <CreateSolanaAccount createMusicAccount={createMusicAccount} />;
+  } else if (isLoading) {
+    return <LoadingView />;
   } else {
     return (
       <Container maxW='container.xl' p={8} overflow='auto'>
@@ -186,7 +192,11 @@ export default function ShowSolanaMusicList({ walletAddress }) {
 
         <SimpleGrid id='scrollable' columns={2} spacing={4} mt='60px'>
           {musicList.map((music, idx) => (
-            <SolanaMusicCard key={idx} authenticated={authenticated} music={music} />
+            <SolanaMusicCard
+              key={idx}
+              authenticated={authenticated}
+              music={music}
+            />
           ))}
         </SimpleGrid>
       </Container>

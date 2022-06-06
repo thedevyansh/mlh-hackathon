@@ -68,7 +68,7 @@ function Song({ selectedPlaylist, data, isInSearch }) {
           </Center>
         )}
         <Image
-          src={thumbnails.default.url}
+          src={thumbnails.default ? thumbnails.default.url : thumbnails}
           w='120px'
           h='90px'
           fallbackSrc='https://via.placeholder.com/120x90'
