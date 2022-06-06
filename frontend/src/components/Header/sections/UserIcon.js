@@ -7,7 +7,7 @@ import { BsMusicNoteList } from 'react-icons/bs';
 const URI =
   !process.env.NODE_ENV || process.env.NODE_ENV === 'development'
     ? 'http://localhost:3000/solana-music'
-    : 'https://acousticlicious.herokuapp.com/solana-music';
+    : 'https://acousticlicious.netlify.com/solana-music';
 
 const UserIcon = ({ isLoaded, isAuth, image }) => {
   if (!isLoaded) {
