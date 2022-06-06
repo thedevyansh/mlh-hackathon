@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useSelector } from 'react-redux';
 import {
   Container,
   Text,
@@ -38,7 +39,9 @@ const opts = {
 export default function ShowSolanaMusicList({ walletAddress }) {
   const [inputValue, setInputValue] = useState('');
   const [musicList, setMusicList] = useState([]);
+  const authenticated = useSelector(state => state.user.authenticated);
   const toast = useToast();
+
 
   const sendMusicToSolana = async () => {
     if (inputValue.length === 0) {
@@ -145,7 +148,6 @@ export default function ShowSolanaMusicList({ walletAddress }) {
   useEffect(() => {
     if (walletAddress) {
       console.log('Fetching Music list from Solana...');
-      // Call Solana program here.
       getMusicListFromSolana();
     }
   }, [walletAddress, getMusicListFromSolana]);
@@ -184,7 +186,7 @@ export default function ShowSolanaMusicList({ walletAddress }) {
 
         <SimpleGrid id='scrollable' columns={2} spacing={4} mt='60px'>
           {musicList.map((music, idx) => (
-            <SolanaMusicCard key={idx} music={music} />
+            <SolanaMusicCard key={idx} authenticated={authenticated} music={music} />
           ))}
         </SimpleGrid>
       </Container>

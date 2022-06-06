@@ -9,12 +9,12 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
-  IconButton
+  IconButton,
 } from '@chakra-ui/react';
 import he from 'he';
 import { FaPlus, FaYoutube } from 'react-icons/fa';
 
-export default function SolanaMusicCard({ music }) {
+export default function SolanaMusicCard({ authenticated, music }) {
   const { title, thumbnailLink, channelTitle } = music;
   return (
     <Flex
@@ -46,13 +46,14 @@ export default function SolanaMusicCard({ music }) {
         </Flex>
       </Flex>
       <Menu isLazy>
-        <MenuButton
-          as={IconButton}
-          aria-label='Add to playlist'
-          icon={<FaPlus />}
-        />
+          <MenuButton
+            as={IconButton}
+            aria-label='Add to playlist'
+            icon={<FaPlus />}
+            isDisabled={!authenticated ? true : false}
+          />
         <MenuList>
-          <MenuItem isDisabled>No playlists...</MenuItem>
+          <MenuItem isDisabled>No playlists found...</MenuItem>
         </MenuList>
       </Menu>
     </Flex>
