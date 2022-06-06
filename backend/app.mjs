@@ -75,7 +75,7 @@ app.use(express.static(join(__dirname, 'public')));
 const RedisStore = connectRedis(session);
 const sess = {
   store: new RedisStore({ client: redisClient }),
-  name: 'acoustics.id',
+  name: 'acousticlicious.id',
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,

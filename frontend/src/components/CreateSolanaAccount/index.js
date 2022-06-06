@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Heading, Text, Button } from '@chakra-ui/react';
 import { HorizontalHeading } from '../../horizontalHeading';
 
-export default function CreateSolanaAccount() {
+export default function CreateSolanaAccount({ createMusicAccount }) {
   return (
     <>
       <Container
@@ -28,7 +28,8 @@ export default function CreateSolanaAccount() {
           width='-webkit-fit-content'
           variant='solid'
           size='lg'
-          mt='40px'>
+          mt='40px'
+          onClick={createMusicAccount}>
           Create Account
         </Button>
       </Container>
