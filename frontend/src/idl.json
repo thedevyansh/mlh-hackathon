@@ -39,6 +39,10 @@
             ],
             "args": [
                 {
+                    "name": "videoId",
+                    "type": "string"
+                },
+                {
                     "name": "thumbnailLink",
                     "type": "string"
                 },
@@ -81,6 +85,10 @@
             "type": {
                 "kind": "struct",
                 "fields": [
+                    {
+                        "name": "videoId",
+                        "type": "string"
+                    },
                     {
                         "name": "thumbnailLink",
                         "type": "string"
