@@ -15,7 +15,7 @@ import he from 'he';
 import { FaPlus, FaYoutube } from 'react-icons/fa';
 
 export default function SolanaMusicCard({ music }) {
-  const { title, thumbnails, channelTitle } = music;
+  const { title, thumbnailLink, channelTitle } = music;
   return (
     <Flex
       bg='rgba(12, 15, 49, 0.6)'
@@ -31,7 +31,7 @@ export default function SolanaMusicCard({ music }) {
       }}>
       <Flex alignItems='center'>
         <Image
-          src={thumbnails}
+          src={thumbnailLink}
           w='110px'
           h='80px'
           fallbackSrc='https://via.placeholder.com/120x90'

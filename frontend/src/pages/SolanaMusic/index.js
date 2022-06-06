@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useToast } from '@chakra-ui/react';
 import { Helmet } from 'react-helmet-async';
 import ConnectSolanaWallet from '../../components/ConnectSolanaWallet';
-import ShowSolanaMusicList from '../../components/ShowSolanaMusicList'
+import ShowSolanaMusicList from '../../components/ShowSolanaMusicList';
 
 export default function SolanaMusic() {
   const [walletAddress, setWalletAddress] = useState(null);
@@ -26,9 +26,9 @@ export default function SolanaMusic() {
         });
       }
     } catch (error) {
-      console.log('ERROR in [checkIfWalletIsConnected] : ', error)
+      console.log('ERROR in [checkIfWalletIsConnected] : ', error);
     }
-  }, [toast])
+  }, [toast]);
 
   useEffect(() => {
     const onLoad = async () => {
@@ -44,7 +44,9 @@ export default function SolanaMusic() {
       <Helmet>
         <title>Solana Music - Acoustic Licious</title>
       </Helmet>
-      {!walletAddress && <ConnectSolanaWallet setWalletAddress={setWalletAddress} />}
+      {!walletAddress && (
+        <ConnectSolanaWallet setWalletAddress={setWalletAddress} />
+      )}
       {walletAddress && <ShowSolanaMusicList walletAddress={walletAddress} />}
     </>
   );
