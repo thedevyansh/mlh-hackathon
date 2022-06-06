@@ -3,7 +3,7 @@
 COVID-19 has significantly impacted the mental health of children and adults alike. Globally, the population suffering from loneliness rose from 6% to 21% post-pandemic; with communication going more virtual, better ways of socializing need to be developed. 
 
 <p align="center">
-<img src="snapshots/home.png" width="400">
+<img src="snapshots/home.png" width="700">
 </p>
 
 Introducing **Acoustic Licious,** a stunning new way to discover & play great music and make new friends.
@@ -44,14 +44,14 @@ Users can create public or private rooms where others can join. A room is a plac
 Join public rooms:
 
 <p align="center">
-<img src="snapshots/roomslist.png" width="400">
+<img src="snapshots/roomslist.png" width="700">
 </p>
 
 
 Listen to songs in the room:
 
 <p align="center">
-<img src="snapshots/room.png" width="400">
+<img src="snapshots/room.png" width="700">
 </p>
 
 ### Playlists
@@ -61,17 +61,17 @@ A playlist is a collection of songs. Songs are played through playlists created 
 - **Solana Music:** Users can add their favorite music to Solana Blockchain for others to add them. Similarly, users can add songs uploaded by you to their playlists.
 
 <p align="center">
-<img src="snapshots/solanawallet.png" width="400">
+<img src="snapshots/solanawallet.png" width="700">
 </p>
 
 <p align="center">
-<img src="snapshots/solanamusic.png" width="400">
+<img src="snapshots/solanamusic.png" width="700">
 </p>
 
 - **Through YouTube:** A user can add music to their playlist by searching them on YouTube.
 
 <p align="center">
-<img src="snapshots/playlists.png" width="400">
+<img src="snapshots/playlists.png" width="700">
 </p>
 
 ### Queue Mechanism
