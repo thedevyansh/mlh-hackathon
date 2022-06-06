@@ -175,7 +175,7 @@ export default function ShowSolanaMusicList({ walletAddress }) {
             value={inputValue}
             onChange={e => setInputValue(e.target.value)}
             onKeyDown={handleEnter}
-            placeholder='Enter link to YouTube music for uploading...'
+            placeholder='Search songs on YouTube for uploading...'
             _placeholder={{ color: 'white' }}
           />
           <InputRightElement width='5.5rem'>
