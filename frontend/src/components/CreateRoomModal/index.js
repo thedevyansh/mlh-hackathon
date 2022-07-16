@@ -29,16 +29,13 @@ const validateRoomName = value => {
   return value ? true : 'Room name is required';
 };
 
-const validateDescription = value => {
-  return value ? true : 'Description is required';
-};
-
 function CreateRoomModal({ isOpen, onClose }) {
   const {
     register,
     formState: { isSubmitting, errors },
     handleSubmit,
   } = useForm();
+  const descriptionRef = useRef(null);
   const tagsRef = useRef([]);
   const socket = useContext(SocketContext);
   const history = useHistory();
@@ -46,9 +43,11 @@ function CreateRoomModal({ isOpen, onClose }) {
   const toast = useToast();
 
   const handleCreateRoom = values => {
+    const roomDescription = descriptionRef.current.value === '' ? null : descriptionRef.current.value;
+
     const dataToSubmit = {
       name: values.roomName,
-      description: values.description,
+      description: roomDescription ?? "We'll be listening to some fun tracks here.",
       genres: tagsRef?.current?.map(tag => tag.value) ?? [],
       private: values.privateRoom,
     };
@@ -90,7 +89,7 @@ function CreateRoomModal({ isOpen, onClose }) {
                   fontSize='sm'
                   fontWeight='md'
                   color='gray.50'>
-                  Room name
+                  Room name *
                 </FormLabel>
                 <Input
                   name='roomName'
@@ -105,7 +104,7 @@ function CreateRoomModal({ isOpen, onClose }) {
                 </FormErrorMessage>
               </FormControl>
 
-              <FormControl isInvalid={errors.description} mt={1}>
+              <FormControl mt={1}>
                 <FormLabel
                   htmlFor='description'
                   fontSize='sm'
@@ -115,18 +114,13 @@ function CreateRoomModal({ isOpen, onClose }) {
                 </FormLabel>
                 <Textarea
                   name='description'
-                  {...register('description', {
-                    validate: validateDescription,
-                  })}
+                  ref={descriptionRef}
                   placeholder="We'll be listening to some fun tracks here."
                   mt={1}
                   rows={3}
                   shadow='sm'
                   fontSize={{ sm: 'sm' }}
                 />
-                <FormErrorMessage>
-                  {errors.description && errors.description.message}
-                </FormErrorMessage>
                 <FormHelperText>
                   Describe what you'll be doing in this room.
                 </FormHelperText>
