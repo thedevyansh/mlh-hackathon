@@ -24,6 +24,7 @@ const main = async () => {
 
   // You'll need to now pass a GIF link to the function! You'll also need to pass in the user submitting the GIF!
   await program.rpc.addMusic(
+    'DK_UsATwoxI',
     'https://i.ytimg.com/vi/2Vv-BfVoq4g/default.jpg',
     'Ed Sheeran - Perfect (Official Music Video)',
     "Ed Sheeran",

@@ -11,6 +11,7 @@ import {
   Button,
   SimpleGrid,
   useToast,
+  Box,
 } from '@chakra-ui/react';
 import { FaSearch } from 'react-icons/fa';
 import { Buffer } from 'buffer';
@@ -163,9 +164,6 @@ export default function ShowSolanaMusicList({ walletAddress }) {
   } else {
     return (
       <Container maxW='container.xl' p={8} overflow='auto'>
-        <Text fontSize='2xl' mb='20px'>
-          Upload or save music to your playlists.
-        </Text>
         <InputGroup mb={4}>
           <InputLeftElement
             pointerEvents='none'
@@ -175,8 +173,8 @@ export default function ShowSolanaMusicList({ walletAddress }) {
             value={inputValue}
             onChange={e => setInputValue(e.target.value)}
             onKeyDown={handleEnter}
-            placeholder='Search songs on YouTube for uploading...'
-            _placeholder={{ color: 'white' }}
+            placeholder='Search songs on YouTube for uploading to Solana...'
+            _placeholder={{ color: 'gray' }}
           />
           <InputRightElement width='5.5rem'>
             <Button
@@ -190,7 +188,14 @@ export default function ShowSolanaMusicList({ walletAddress }) {
           </InputRightElement>
         </InputGroup>
 
-        <SimpleGrid id='scrollable' columns={2} spacing={4} mt='60px'>
+        <Box mt='40px'>
+          {musicList.length > 0 ? (
+            <Text fontSize='2xl'>Songs currently present on Solana</Text>
+          ) : (
+            <Text fontSize='2xl'>No songs present on Solana</Text>
+          )}
+        </Box>
+        <SimpleGrid id='scrollable' columns={2} spacing={4} mt='20px'>
           {musicList.map((music, idx) => (
             <SolanaMusicCard
               key={idx}

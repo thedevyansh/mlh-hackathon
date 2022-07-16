@@ -12,11 +12,12 @@ pub mod acousticlicious {
     Ok(())
   }
 
-  pub fn add_music(ctx: Context<AddMusic>, thumbnail_link: String, title: String, channel_title: String) -> Result <()> {
+  pub fn add_music(ctx: Context<AddMusic>, video_id: String, thumbnail_link: String, title: String, channel_title: String) -> Result <()> {
     let base_account = &mut ctx.accounts.base_account;
     let user = &mut ctx.accounts.user;
 
     let item = ItemStruct {
+      video_id: video_id.to_string(),
       thumbnail_link: thumbnail_link.to_string(),
       title: title.to_string(),
       channel_title: channel_title.to_string(),
@@ -50,6 +51,7 @@ pub struct AddMusic<'info> {
 // Create a custom struct for us to work with.
 #[derive(Debug, Clone, AnchorSerialize, AnchorDeserialize)]
 pub struct ItemStruct {
+    pub video_id: String,
     pub thumbnail_link: String,
     pub title: String,
     pub channel_title: String,
