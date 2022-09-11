@@ -76,6 +76,14 @@ export default function ShowSolanaMusicList({ walletAddress }) {
             },
           }
         );
+
+        toast({
+          title: 'Successfully added.',
+          status: 'info',
+          position: 'top',
+          duration: 5000,
+        });
+
         console.log('Music successfully sent to Solana Program', inputValue);
 
         await getMusicListFromSolana();
